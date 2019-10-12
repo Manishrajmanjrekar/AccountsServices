@@ -11,37 +11,66 @@ using AccountsApiServices.Models;
 
 namespace AccountsApiServices.Controllers
 {
-   
 
+    public class RequestParams
+    {
+        public string q { get; set; }
+        public string sort { get; set; }
+
+        public string order { get; set; }
+
+    }
     public class VendorController : ApiController
     {
+        
         // GET api/values
         public Vendor Get()
         {
-            
-
             return new Vendor { firstName = "rams", lastName = "rams1" };
-
         }
 
-        [Route("api/Vendor/Getdata")]
-        public async void Getdata()
+        [Route("api/Vendor/VendorNames")]
+        [HttpPost]
+        public List<Vendor> VendorNames(RequestParams data)
         {
-            //return new string[] { "value1", "value2" };
-            using (HttpClient client = new HttpClient())
+            Console.WriteLine(data);
+
+            var objdata = new List<Vendor>()
             {
-                const string url = "https://github.com/tugberkugurlu/ASPNETWebAPISamples/archive/master.zip";
-                using (HttpResponseMessage response = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead))
-                using (Stream streamToReadFrom = await response.Content.ReadAsStreamAsync())
-                {
-                    string fileToWriteTo = Path.GetTempFileName();
-                    using (Stream streamToWriteTo = File.Open(fileToWriteTo, FileMode.Create))
-                    {
-                        await streamToReadFrom.CopyToAsync(streamToWriteTo);
-                    }
-                }
-            }
+                new Vendor { firstName = "rams", lastName = "rams11" },
+                new Vendor { firstName = "rams1", lastName = "rams12" },
+
+                new Vendor { firstName = "rams2", lastName = "rams13" },
+
+                new Vendor { firstName = "rams3", lastName = "rams13" }
+
+
+
+            };
+
+            var obj = objdata.Where(e => e.firstName.Contains(data.q)).ToList();
+            return obj;
+
         }
+
+        //[Route("api/Vendor/Getdata")]
+        //public async void Getdata()
+        //{
+        //    //return new string[] { "value1", "value2" };
+        //    using (HttpClient client = new HttpClient())
+        //    {
+        //        const string url = "https://github.com/tugberkugurlu/ASPNETWebAPISamples/archive/master.zip";
+        //        using (HttpResponseMessage response = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead))
+        //        using (Stream streamToReadFrom = await response.Content.ReadAsStreamAsync())
+        //        {
+        //            string fileToWriteTo = Path.GetTempFileName();
+        //            using (Stream streamToWriteTo = File.Open(fileToWriteTo, FileMode.Create))
+        //            {
+        //                await streamToReadFrom.CopyToAsync(streamToWriteTo);
+        //            }
+        //        }
+        //    }
+        //}
 
         [HttpPost]
         [Route("api/Vendor/AddVendor")]
