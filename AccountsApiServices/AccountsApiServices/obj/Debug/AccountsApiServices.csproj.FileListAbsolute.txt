@@ -168,3 +168,5 @@ C:\Users\Manis\Documents\GitHub\AccountsServices\AccountsApiServices\AccountsApi
 C:\Users\Manis\Documents\GitHub\AccountsServices\AccountsApiServices\AccountsApiServices\obj\Debug\AccountsApiServices.csproj.CopyComplete
 C:\Users\Manis\Documents\GitHub\AccountsServices\AccountsApiServices\AccountsApiServices\obj\Debug\AccountsApiServices.dll
 C:\Users\Manis\Documents\GitHub\AccountsServices\AccountsApiServices\AccountsApiServices\obj\Debug\AccountsApiServices.pdb
+C:\Users\Manis\Documents\GitHub\AccountsServices\AccountsApiServices\AccountsApiServices\bin\Swashbuckle.Core.dll
+C:\Users\Manis\Documents\GitHub\AccountsServices\AccountsApiServices\AccountsApiServices\bin\WebActivatorEx.dll
