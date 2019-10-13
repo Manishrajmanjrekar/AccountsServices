@@ -202,13 +202,10 @@ namespace AccountsApiServices.Controllers
                          mobile = "9999999999",
                          alternateMobile = "8888888888",
                          homePhone = "8666666666",
-                         officePhone = "8555555555",
                          email = "Ajay@abc.com",
                          address = "Ajay address",
                          city = "Ajay city",
                          state = "Ajay state",
-                         shopName = "Ajay shop",
-                         shopLocation = "Ajay shop ",
                          referredBy = "Ajay referrer",
                     }
                 };
