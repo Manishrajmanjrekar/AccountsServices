@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using AccountsApiServices.Models;
 using AccountsApiServices.ViewModels;
@@ -43,52 +44,39 @@ namespace AccountsApiServices.Controllers
 
         [HttpPost]
         [Route("api/Customer/SaveCustomer")]
-        public CommonResponseViewModel SaveCustomer(CustomerViewModel CustomerVM)
+        public CommonResponseViewModel SaveCustomer(CustomerViewModel customerVM)
         {
             CommonResponseViewModel response = new CommonResponseViewModel();
-            List<CustomerViewModel> Customers = GetCustomers();
+            List<CustomerViewModel> customers = GetCustomers();
 
-            if (CustomerVM.id == 0)
+            if (customerVM.id <= 0)
             {
                 // insert
-                CustomerVM.id = Customers[Customers.Count - 1].id + 1;
-                //CustomerVM.Url = "/Customer/" + CustomerVM.id;
-                Customers.Add(CustomerVM);
+                customerVM.id = customers[customers.Count - 1].id + 1;
+                customers.Add(customerVM);
 
                 response.isSuccess = true;
-                response.recordId = CustomerVM.id;
+                response.recordId = customerVM.id;
             }
             else
             {
                 // update
-                CustomerViewModel Customer = Customers.Where(x => x.id == CustomerVM.id).FirstOrDefault();
-
-                if (Customer != null)
+                var customer = customers.Where(x => x.id == customerVM.id).FirstOrDefault();
+                if (customer != null)
                 {
-                    Customer.firstName = CustomerVM.firstName;
-                    Customer.address = CustomerVM.address;
-                    Customer.city = CustomerVM.city;
-                    Customer.referredBy = CustomerVM.referredBy;
-                    Customer.mobile = CustomerVM.mobile;
+                    int index = customers.FindIndex(x => x.id == customerVM.id);
+                    customers[index] = customer;
 
                     response.isSuccess = true;
-                    response.recordId = CustomerVM.id;
-                }
-                else // TO DO: remove this temp else block
-                {
-                    CustomerVM.id = Customers[Customers.Count - 1].id + 1;
-                    //CustomerVM.Url = "/Customer/" + CustomerVM.id;
-                    Customers.Add(CustomerVM);
-
-                    response.isSuccess = true;
-                    response.recordId = CustomerVM.id;
+                    response.recordId = customerVM.id;
                 }
             }
 
-            //if (response.IsSuccess)
-            //{
-            //    _cache.Set("Customers", Customers);
-            //}
+            if (response.isSuccess)
+            {
+                HttpContext.Current.Cache.Remove("Customers");
+                HttpContext.Current.Cache.Insert("Customers", customers);
+            }
 
             return response;
         }
@@ -98,11 +86,12 @@ namespace AccountsApiServices.Controllers
         public bool DeleteCustomer(int id)
         {
             bool isSuccess = false;
-            List<CustomerViewModel> Customers = GetCustomers();
-            if (id > 0 && Customers != null)
+            List<CustomerViewModel> customers = GetCustomers();
+            if (id > 0 && customers != null)
             {
-                Customers = Customers.Where(x => x.id != id).ToList();
-                //_cache.Set("Customers", Customers);
+                customers = customers.Where(x => x.id != id).ToList();
+                HttpContext.Current.Cache.Remove("Customers");
+                HttpContext.Current.Cache.Insert("Customers", customers);
 
                 isSuccess = true;
             }
@@ -119,60 +108,84 @@ namespace AccountsApiServices.Controllers
             if (string.IsNullOrWhiteSpace(data))
                 return isDuplicateNickName;
 
-            List<string> exitingNickNames = new List<string>()
-            {
-                "ramesh",
-                "suresh",
-                "ajay",
-                "vijay",
-            };
-
-            if (exitingNickNames.Contains(data, StringComparer.OrdinalIgnoreCase))
+            var customers = GetCustomers();
+            if (customers != null && customers.Any(x => x.nickName.ToLower() == data.ToLower()))
             {
                 isDuplicateNickName = true;
             }
 
             return isDuplicateNickName;
         }
-
+     
         private List<CustomerViewModel> GetCustomers()
         {
-            List<CustomerViewModel> Customers = null;
-            //_cache.TryGetValue("Customers", out Customers);
-
-            if (Customers == null)
+            List<CustomerViewModel> customers = null;
+            if (HttpContext.Current.Cache.Get("Customers") != null)
             {
-                Customers = new List<CustomerViewModel>
-                {
-                    new CustomerViewModel { id = 1, firstName = "Arjun", address="Dilshuknagar", city="Hyderabad", referredBy="Referrer 1", mobile = "9923456789"},
-                    new CustomerViewModel { id = 2, firstName = "Rizwan", address="Nagole", city="Hyderabad", referredBy="Referrer 1", mobile = "8823456789"},
-                    new CustomerViewModel {
-                         id = 3,
-                         nickName = "AjayTej",
-                         firstName = "Ajay",
-                         middleName = "mn",
-                         lastName = "Teja",
-                         mobile = "9999999999",
-                         alternateMobile = "8888888888",
-                         homePhone = "8666666666",
-                         officePhone = "8555555555",
-                         email = "Ajay@abc.com",
-                         address = "Ajay address",
-                         city = "Ajay city",
-                         state = "Ajay state",
-                         shopName = "Ajay shop",
-                         shopLocation = "Ajay shop ",
-                         referredBy = "Ajay referrer",
-                    }
-                };
-
-                //Customers.ForEach(x => x.Url = "/Customer/" + x.CustomerId);
-
-
-                //_cache.Set("Customers", Customers);
+                customers = (List<CustomerViewModel>)HttpContext.Current.Cache.Get("Customers");
             }
 
-            return Customers;
+            if (customers == null || customers.Count == 0)
+            {
+                List<string> addresses = new List<string>()
+                { "Ameerpet", "Kukatpally", "Mehdipatnam", "Madhapur", "Hitech City", "Dilsukhnagar", "Uppal" };
+
+                List<string> customerNames = new List<string>()
+                {
+                    "Aditya","Akshat","Anubhav","Arjun","Ashish","Bhaskar","Bikram","Chetas","Chiranjeev","Daljeet","Dilip",
+                    "Gaurav","Gautam","Girish","Gurdeep","Indiresh","Ishranth","Jagan","Jaideep","Jeet","Karun","Lalit",
+                    "Manvik","Mridul","Naagesh","Naishadh","Nilaksh","Parth","Pavan","Pranav",
+                    "Rajiv","Ritesh","Sachin","Samir","Sanchit","Sandeep","Sanjay","Siddharth","Sparsh",
+                    "Tarun","Tushar","Udit","Uttam","Varun","Vikas","Vinay","Vipul","Yashwant"
+                };
+
+                List<string> lastNames = new List<string>()
+                {
+                    "Sharma","Verma","Gupta","Malhotra","Bhatnagar","Saxena","Kapoor","Singh","Mehra","Chopra","Sarin",
+                    "Dutt","Rao","Singh","Yadav","Jhadav","Jaiteley","Chauhan","Khan"
+                };
+
+
+                Random random = new Random();
+
+                customers = new List<CustomerViewModel>();
+                CustomerViewModel customer = new CustomerViewModel();
+
+                for (int recordId = 1; recordId <= 100; recordId++)
+                {
+                    string name = customerNames[random.Next(1, customerNames.Count())];
+
+                    customer = new CustomerViewModel();
+                    customer.id = recordId;
+                    customer.nickName = name + recordId;
+                    customer.firstName = name;
+                    customer.middleName = "";
+                    customer.lastName = lastNames[random.Next(1, lastNames.Count())];
+                    customer.mobile = ("999999999" + recordId);
+                    customer.alternateMobile = ("888888888" + recordId);
+                    customer.homePhone = ("777777777" + recordId);
+                    customer.email = name + "@abc.com";
+                    customer.address = addresses[random.Next(1, addresses.Count())];
+                    customer.city = "Hyderabad";
+                    customer.state = "Telangana";
+                    customer.referredBy = "Referrer " + random.Next(1, 10).ToString();
+
+                    customer.mobile = customer.mobile.Length > 10 ? customer.mobile.Substring(customer.mobile.Length - 10, 10) : customer.mobile;
+                    customer.alternateMobile = customer.alternateMobile.Length > 10 ? customer.alternateMobile.Substring(customer.alternateMobile.Length - 10, 10) : customer.alternateMobile;
+                    customer.homePhone = customer.homePhone.Length > 10 ? customer.homePhone.Substring(customer.homePhone.Length - 10, 10) : customer.homePhone;
+
+                    customer.shopName = name + " shop";
+                    customer.shopLocation = addresses[random.Next(1, addresses.Count())];
+                    customer.officePhone = ("666666666" + recordId);
+                    customer.officePhone = customer.officePhone.Length > 10 ? customer.officePhone.Substring(customer.officePhone.Length - 10, 10) : customer.officePhone;
+
+                    customers.Add(customer);
+                };
+
+                HttpContext.Current.Cache.Insert("Customers", customers);
+            }
+
+            return customers;
         }
 
     }

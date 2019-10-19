@@ -93,13 +93,12 @@ namespace AccountsApiServices.Controllers
         public CommonResponseViewModel SaveVendor(VendorViewModel vendorVM)
         {
             CommonResponseViewModel response = new CommonResponseViewModel();
-            List<VendorViewModel> vendors = GetVendors();
+            List<VendorViewModel> vendors = GetVendors();           
 
-            if (vendorVM.id == 0)
+            if (vendorVM.id <= 0)
             {
                 // insert
                 vendorVM.id = vendors[vendors.Count - 1].id + 1;
-                //vendorVM.Url = "/vendor/" + vendorVM.id;
                 vendors.Add(vendorVM);
 
                 response.isSuccess = true;
@@ -108,34 +107,23 @@ namespace AccountsApiServices.Controllers
             else
             {
                 // update
-                VendorViewModel vendor = vendors.Where(x => x.id == vendorVM.id).FirstOrDefault();
-
+                var vendor = vendors.Where(x => x.id == vendorVM.id).FirstOrDefault();
                 if (vendor != null)
                 {
-                    vendor.firstName = vendorVM.firstName;
-                    vendor.address = vendorVM.address;
-                    vendor.city = vendorVM.city;
-                    vendor.referredBy = vendorVM.referredBy;
-                    vendor.mobile = vendorVM.mobile;
+                    int index = vendors.FindIndex(x => x.id == vendorVM.id);
+                    vendors[index] = vendorVM;
 
                     response.isSuccess = true;
                     response.recordId = vendorVM.id;
-                }
-                else // TO DO: remove this temp else block
-                {
-                    vendorVM.id = vendors[vendors.Count - 1].id + 1;
-                    //vendorVM.Url = "/vendor/" + vendorVM.id;
-                    vendors.Add(vendorVM);
-
-                    response.isSuccess = true;
-                    response.recordId = vendorVM.id;
+                   
                 }
             }
 
-            //if (response.IsSuccess)
-            //{
-            //    _cache.Set("Vendors", vendors);
-            //}
+            if (response.isSuccess)
+            {
+                HttpContext.Current.Cache.Remove("Vendors");
+                HttpContext.Current.Cache.Insert("Vendors", vendors);
+            }
 
             return response;
         }
@@ -149,7 +137,8 @@ namespace AccountsApiServices.Controllers
             if (id > 0 && vendors != null)
             {
                 vendors = vendors.Where(x => x.id != id).ToList();
-                //_cache.Set("Vendors", vendors);
+                HttpContext.Current.Cache.Remove("Vendors");
+                HttpContext.Current.Cache.Insert("Vendors", vendors);
 
                 isSuccess = true;
             }
@@ -166,15 +155,8 @@ namespace AccountsApiServices.Controllers
             if (string.IsNullOrWhiteSpace(data))
                 return isDuplicateNickName;
 
-            List<string> exitingNickNames = new List<string>()
-            {
-                "ramesh",
-                "suresh",
-                "ajay",
-                "vijay",
-            };
-
-            if (exitingNickNames.Contains(data, StringComparer.OrdinalIgnoreCase))
+            var vendors = GetVendors();
+            if (vendors != null && vendors.Any(x => x.nickName.ToLower() == data.ToLower()))
             {
                 isDuplicateNickName = true;
             }
@@ -185,35 +167,62 @@ namespace AccountsApiServices.Controllers
         private List<VendorViewModel> GetVendors()
         {
             List<VendorViewModel> vendors = null;
-            //_cache.TryGetValue("Vendors", out vendors);
-
-            if (vendors == null)
+            if (HttpContext.Current.Cache.Get("Vendors") != null)
             {
-                vendors = new List<VendorViewModel>
+                vendors = (List<VendorViewModel>)HttpContext.Current.Cache.Get("Vendors");
+            }
+
+            if (vendors == null || vendors.Count == 0)
+            {
+                List<string> addresses = new List<string>()
+                { "Dilsukhnagar","LBnagar","Nagole","Uppal","Balnagar","Gandipet","Hayathnagar","Rajendranagar","Saroornagar" };
+
+                List<string> vendorNames = new List<string>()
                 {
-                    new VendorViewModel { id = 1, firstName = "Arjun", address="Dilshuknagar", city="Hyderabad", referredBy="Referrer 1", mobile = "9923456789"},
-                    new VendorViewModel { id = 2, firstName = "Rizwan", address="Nagole", city="Hyderabad", referredBy="Referrer 1", mobile = "8823456789"},
-                    new VendorViewModel {
-                         id = 3,
-                         nickName = "AjayTej",
-                         firstName = "Ajay",
-                         middleName = "mn",
-                         lastName = "Teja",
-                         mobile = "9999999999",
-                         alternateMobile = "8888888888",
-                         homePhone = "8666666666",
-                         email = "Ajay@abc.com",
-                         address = "Ajay address",
-                         city = "Ajay city",
-                         state = "Ajay state",
-                         referredBy = "Ajay referrer",
-                    }
+                    "Abdul","Shivansh","Avi","Samar","Pratyush","Viaan","Neel","Om","Anirudh","Isaac","Devansh","Yash","Abeer","Rehaan",
+                    "Tejas","Zayan","Advay","Sarthak","Darsh","Anay","Gautam","Jason","Agastya","Rohan","Daksh","Manan","Pranav",
+                    "Abhiram","Samarth"
                 };
 
-                //vendors.ForEach(x => x.Url = "/vendor/" + x.VendorId);
+                List<string> lastNames = new List<string>()
+                {
+                    "Sharma","Verma","Gupta","Malhotra","Bhatnagar","Saxena","Kapoor","Singh","Mehra","Chopra","Sarin",
+                    "Dutt","Rao","Singh","Yadav","Jhadav","Jaiteley","Chauhan","Khan"
+                };
 
 
-                //_cache.Set("Vendors", vendors);
+                Random random = new Random();
+                
+                vendors = new List<VendorViewModel>();
+                VendorViewModel vendor = new VendorViewModel();
+                
+                for (int recordId = 1; recordId <= 100; recordId++)
+                {                   
+                    string name = vendorNames[random.Next(1, vendorNames.Count())];
+
+                    vendor = new VendorViewModel();
+                    vendor.id = recordId;
+                    vendor.nickName = name + recordId;
+                    vendor.firstName = name;
+                    vendor.middleName = "";
+                    vendor.lastName = lastNames[random.Next(1, lastNames.Count())];
+                    vendor.mobile = ("999999999" + recordId);
+                    vendor.alternateMobile = ("888888888" + recordId);
+                    vendor.homePhone = ("777777777" + recordId);
+                    vendor.email = name + "@abc.com";
+                    vendor.address = addresses[random.Next(1, addresses.Count())];
+                    vendor.city = "Hyderabad";
+                    vendor.state = "Telangana";
+                    vendor.referredBy = "Referrer " + random.Next(1, 10).ToString();
+
+                    vendor.mobile = vendor.mobile.Length > 10 ? vendor.mobile.Substring(vendor.mobile.Length-10, 10) : vendor.mobile;
+                    vendor.alternateMobile = vendor.alternateMobile.Length > 10 ? vendor.alternateMobile.Substring(vendor.alternateMobile.Length - 10, 10) : vendor.alternateMobile;
+                    vendor.homePhone = vendor.homePhone.Length > 10 ? vendor.homePhone.Substring(vendor.homePhone.Length - 10, 10) : vendor.homePhone;
+
+                    vendors.Add(vendor);
+                };
+
+                HttpContext.Current.Cache.Insert("Vendors", vendors);
             }
 
             return vendors;
