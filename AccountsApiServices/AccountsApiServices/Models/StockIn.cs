@@ -13,6 +13,7 @@ namespace AccountsApiServices.Models
         public string CreatedDate { get; set; }
         public int VendorId { get; set; }
         public bool IsActive { get; set; }
+        public string loadName { get; set; }
 
 
 

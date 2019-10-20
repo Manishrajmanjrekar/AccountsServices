@@ -13,7 +13,7 @@ using AccountsApiServices.ViewModels;
 namespace AccountsApiServices.Controllers
 {
 
-    public class RequestParams
+    public class VendorNameSearch_RequestParams
     {
         public string q { get; set; }
         public string sort { get; set; }
@@ -21,6 +21,8 @@ namespace AccountsApiServices.Controllers
         public string order { get; set; }
 
     }
+
+    
     public class VendorController : ApiController
     {
         
@@ -32,18 +34,18 @@ namespace AccountsApiServices.Controllers
 
         [Route("api/Vendor/VendorNames")]
         [HttpPost]
-        public List<Vendor> VendorNames(RequestParams data)
+        public List<Vendor> VendorNames(VendorNameSearch_RequestParams data)
         {
             Console.WriteLine(data);
 
             var objdata = new List<Vendor>()
             {
-                new Vendor { firstName = "rams", lastName = "rams11" },
-                new Vendor { firstName = "rams1", lastName = "rams12" },
+                new Vendor { firstName = "rams", lastName = "rams11"+":1" },
+                new Vendor { firstName = "rams1", lastName = "rams12"+":2" },
 
-                new Vendor { firstName = "rams2", lastName = "rams13" },
+                new Vendor { firstName = "rams2", lastName = "rams13"+":3" },
 
-                new Vendor { firstName = "rams3", lastName = "rams13" }
+                new Vendor { firstName = "rams3", lastName = "rams13" +":4"}
 
 
 
