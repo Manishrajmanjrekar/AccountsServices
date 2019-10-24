@@ -38,3 +38,6 @@ AccountsApiServices/AccountsApiServices/obj/Release/TemporaryGeneratedFile_5937a
 *.pdb
 *.eot
 AccountsApiServices/AccountsApiServices/AccountsApiServices.csproj
+*.cs
+*.CopyComplete
+*.targets

@@ -24,10 +24,24 @@ namespace AccountsApiServices.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        // GET: api/StockIn/5
-        public string Get(int id)
+        [Route("api/StockIn/StockById")]
+        [HttpPost]
+        public StockIn StockById([FromBody] string id)
         {
-            return "value";
+            return new StockIn
+            {
+                Id = 1,
+                IsActive = true,
+                nickName = "rams1",
+                TotalQuantity = 101,
+                CreatedDate = DateTime.Now.ToShortDateString(),
+                firstName = "ram",
+                VendorId = 1,
+                loadName="load1",
+                
+            };
+
+           
         }
 
        [Route("api/StockIn/StockInCount")]
@@ -36,10 +50,13 @@ namespace AccountsApiServices.Controllers
         {
             var list = new List<StockIn>()
             {
-                new StockIn{ Id=1,IsActive=true,NickName="rams11",TotalQuantity=101,
+                new StockIn{ Id=1,IsActive=true,nickName="rams1",TotalQuantity=101,
                     CreatedDate =DateTime.Now.ToShortDateString(), VendorId =1},
 
-                 new StockIn{ Id=1,IsActive=true,NickName="rams12",TotalQuantity=107,
+                 new StockIn{ Id=2,IsActive=true,nickName="rams2",TotalQuantity=107,
+                    CreatedDate =DateTime.Now.ToShortDateString(), VendorId =2},
+
+                 new StockIn{ Id=3,IsActive=true,nickName="rams3",TotalQuantity=107,
                     CreatedDate =DateTime.Now.ToShortDateString(), VendorId =2},
             };
 
@@ -65,9 +82,9 @@ namespace AccountsApiServices.Controllers
         {
             var list = new List<StockIn>()
             {
-                new StockIn{ Id=1,IsActive=true,NickName="patnam1",TotalQuantity=101,
+                new StockIn{ Id=1,IsActive=true,nickName="patnam1",TotalQuantity=101,
                     CreatedDate =DateTime.Now.ToShortDateString(), VendorId =1},
-                 new StockIn{ Id=2,IsActive=true,NickName="patnam2",TotalQuantity=107,
+                 new StockIn{ Id=2,IsActive=true,nickName="patnam2",TotalQuantity=107,
                     CreatedDate =DateTime.Now.ToShortDateString(), VendorId =2},
             };
 
@@ -76,15 +93,15 @@ namespace AccountsApiServices.Controllers
             return list;
         }
 
-        // POST: api/StockIn
-        public void Post([FromBody]string value)
-        {
-        }
+        //// POST: api/StockIn
+        //public void Post([FromBody]string value)
+        //{
+        //}
 
-        // PUT: api/StockIn/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
+        //// PUT: api/StockIn/5
+        //public void Put(int id, [FromBody]string value)
+        //{
+        //}
 
         // DELETE: api/StockIn/5
         public void Delete(int id)

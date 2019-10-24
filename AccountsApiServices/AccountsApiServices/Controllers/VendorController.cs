@@ -40,12 +40,12 @@ namespace AccountsApiServices.Controllers
 
             var objdata = new List<Vendor>()
             {
-                new Vendor { firstName = "rams", lastName = "rams11"+":1" },
-                new Vendor { firstName = "rams1", lastName = "rams12"+":2" },
+                new Vendor { firstName = "rams", lastName = "rams11"+":1",id=1,nickName="ramsNick" },
+                new Vendor { firstName = "rams1", lastName = "rams12"+":2",id=2,nickName="rams1Nick" },
 
-                new Vendor { firstName = "rams2", lastName = "rams13"+":3" },
+                new Vendor { firstName = "rams2", lastName = "rams13"+":3" ,id=3,nickName="rams2Nick"},
 
-                new Vendor { firstName = "rams3", lastName = "rams13" +":4"}
+                new Vendor { firstName = "rams3", lastName = "rams13" +":4",id=4,nickName="rams3Nick"}
 
 
 
