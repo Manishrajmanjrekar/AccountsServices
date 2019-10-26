@@ -10,10 +10,10 @@ namespace AccountsApiServices.Controllers
 {
     public class StockInCountCheck_RequestParams
     {
-        public string id { get; set; }
-        public string name { get; set; }
+        public string q { get; set; }
+        public string sort { get; set; }
 
-
+        public string order { get; set; }
 
     }
     public class StockInController : ApiController
@@ -44,7 +44,31 @@ namespace AccountsApiServices.Controllers
            
         }
 
-       [Route("api/StockIn/StockInCount")]
+        [Route("api/StockIn/LoadNames")]
+        [HttpPost]
+        public List<Sales> LoadNames(StockInCountCheck_RequestParams data)
+        {
+            Console.WriteLine(data);
+
+            var objdata = new List<Sales>()
+            {
+                new Sales { CustomerName = "rams", VendorName = "rams11",StockInId=1,LoadName="LoadName1" },
+                new Sales { CustomerName = "rams1", VendorName = "rams12",StockInId=2,LoadName="LoadName2" },
+
+                new Sales { CustomerName = "rams2", VendorName = "rams13" ,StockInId=3,LoadName="LoadName3"},
+
+                new Sales { CustomerName = "rams3", VendorName = "rams13",StockInId=4,LoadName="LoadName4"}
+
+
+
+            };
+
+            var obj = objdata.Where(e => e.LoadName.ToString().ToLowerInvariant().Contains(data.q)).ToList();
+            return obj;
+
+        }
+
+        [Route("api/StockIn/StockInCount")]
        [HttpPost]
         public int StockInCount(StockIn stock)
         {

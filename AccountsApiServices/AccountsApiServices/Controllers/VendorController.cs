@@ -13,7 +13,7 @@ using AccountsApiServices.ViewModels;
 namespace AccountsApiServices.Controllers
 {
 
-    public class VendorNameSearch_RequestParams
+    public class StockInNameSearch_RequestParams
     {
         public string q { get; set; }
         public string sort { get; set; }
@@ -34,7 +34,7 @@ namespace AccountsApiServices.Controllers
 
         [Route("api/Vendor/VendorNames")]
         [HttpPost]
-        public List<Vendor> VendorNames(VendorNameSearch_RequestParams data)
+        public List<Vendor> VendorNames(StockInNameSearch_RequestParams data)
         {
             Console.WriteLine(data);
 
