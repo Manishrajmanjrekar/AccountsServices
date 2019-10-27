@@ -188,5 +188,129 @@ namespace AccountsApiServices.Controllers
             return customers;
         }
 
+        [Route("api/Customer/CustomerNames")]
+        [HttpPost]
+        public List<Customer> CustomerNames(AutoCompleteModel data)
+        {
+            Console.WriteLine(data);
+
+            var objdata = new List<Customer>()
+            {
+                new Customer { firstName = "rams", lastName = "rams11",id=1,nickName="ramsNick" },
+                new Customer { firstName = "rams1", lastName = "rams12",id=2,nickName="rams1Nick" },
+
+                new Customer { firstName = "rams2", lastName = "rams13" ,id=3,nickName="rams2Nick"},
+
+                new Customer { firstName = "rams3", lastName = "rams13",id=4,nickName="rams3Nick"}
+
+
+
+            };
+
+            var obj = objdata.Where(e => e.firstName.Contains(data.q)).ToList();
+            return obj;
+
+        }
+
+        [Route("api/Customer/CustomerPurchasedItems")]
+        [HttpPost]
+        public List<Sales> CustomerPurchasedItems([FromBody] string id)
+        {
+            //var data = new VendorPaymentModel();
+
+            var stockInId = Convert.ToInt16(id);
+            var objdata = new List<Sales>()
+            {
+                new Sales
+                {
+                Id = 1,
+                Price = 7500,
+                VendorName = "rams1",
+                CustomerName ="kader Bhai",
+                Quantity = 10,
+                CreatedDate = DateTime.Now.ToShortDateString(),
+                Total = 75000,
+                VendorId = 1,
+                LoadName = "load1",
+
+                  },
+                 new Sales
+                {
+                Id = 1,
+                Price = 7500,
+                VendorName = "rams1",
+                CustomerName ="kader Bhai",
+                Quantity = 10,
+                CreatedDate = DateTime.Now.ToShortDateString(),
+                Total = 75000,
+                VendorId = 1,
+                LoadName = "load1",
+
+                  },
+                new Sales
+                {
+                Id = 1,
+                Price = 800,
+                VendorName = "rams1",
+                CustomerName ="kader Bhai",
+                Quantity = 10,
+                CreatedDate = DateTime.Now.ToShortDateString(),
+                Total = 8000,
+                VendorId = 1,
+                LoadName = "load1",
+
+                  }
+               };
+
+            var obj = objdata.Where(e => e.Id.Equals(stockInId)).Select(p => p).ToList();
+           
+            return obj;
+
+        }
+
+        [Route("api/Customer/CustomerAmountPaid")]
+        [HttpPost]
+        public List<CustomerAmountPaid> CustomerAmountPaid([FromBody] string id)
+        {
+            //var data = new VendorPaymentModel();
+
+            var stockInId = Convert.ToInt16(id);
+            var objdata = new List<CustomerAmountPaid>()
+            {
+                new CustomerAmountPaid
+                {
+                Id = 1,
+                AmountPaid = 7500,
+                Comments = "some comments",
+                CustomerName ="kader Bhai",
+                CreatedDate = DateTime.Now.ToShortDateString(),
+               
+
+                  },
+                 new CustomerAmountPaid
+                {
+                 Id = 1,
+                AmountPaid = 7000,
+               Comments = "some comments",
+                CustomerName ="kader Bhai",
+                CreatedDate = DateTime.Now.ToShortDateString(),
+
+                  },
+                new CustomerAmountPaid
+                {
+                Id = 1,
+                AmountPaid = 90000,
+                Comments = "some comments",
+                CustomerName ="kader Bhai",
+                CreatedDate = DateTime.Now.ToShortDateString(),
+
+                  }
+               };
+
+            var obj = objdata.Where(e => e.Id.Equals(stockInId)).Select(p => p).ToList();
+
+            return obj;
+
+        }
     }
 }

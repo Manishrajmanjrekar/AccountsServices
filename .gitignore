@@ -41,3 +41,9 @@ AccountsApiServices/AccountsApiServices/AccountsApiServices.csproj
 *.cs
 *.CopyComplete
 *.targets
+*.map
+*.ico
+*.svg
+*.ttf
+*.woff
+*.woff2

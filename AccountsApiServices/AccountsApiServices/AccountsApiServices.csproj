@@ -180,7 +180,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AutoCompleteModel.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\CustomerAmountPaid.cs" />
     <Compile Include="Models\Sales.cs" />
     <Compile Include="Models\StockIn.cs" />
     <Compile Include="Models\Vendor.cs" />
