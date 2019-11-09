@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DbLayer
+namespace Models
 {
     public class Class1
     {
-
     }
 }
