@@ -47,3 +47,4 @@ AccountsApiServices/AccountsApiServices/AccountsApiServices.csproj
 *.ttf
 *.woff
 *.woff2
+*.force

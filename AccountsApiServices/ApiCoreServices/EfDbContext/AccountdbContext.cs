@@ -1,6 +1,8 @@
 ﻿using System;
+using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Configuration;
 
 namespace ApiCoreServices.EfDbContext
 {
@@ -35,10 +37,23 @@ namespace ApiCoreServices.EfDbContext
         public virtual DbSet<VendorExpenses> VendorExpenses { get; set; }
         public virtual DbSet<VendorPayments> VendorPayments { get; set; }
 
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    if (!optionsBuilder.IsConfigured)
+        //    {
+        //    }
+        //}
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
+                IConfigurationRoot configuration = new ConfigurationBuilder()
+                   .SetBasePath(Directory.GetCurrentDirectory())
+                   .AddJsonFile("appsettings.json")
+                   .Build();
+                var connectionString = configuration.GetConnectionString("AccountsDBConnection");
+                optionsBuilder.UseSqlServer(connectionString);
             }
         }
 

@@ -37,11 +37,20 @@ namespace ApiCoreServices.Controllers
         {
             var response = _CustomerRepository.SaveCustomer(customerVM);
             Console.WriteLine();
-            return null;
+            return response;
         }
 
         [HttpPost]
-        [Route("api/Customer/{id}")]
+        [Route("UpdateCustomer")]
+        public CommonResponseViewModel UpdateCustomer(CustomerViewModel customerVM)
+        {
+            var response = _CustomerRepository.UpdateCustomer(customerVM);
+            Console.WriteLine();
+            return response;
+        }
+
+        [HttpPost]
+        [Route("GetCustomerById")]
         public CustomerViewModel GetCustomerById(int id)
         {
             CustomerViewModel Customer = null;
@@ -49,7 +58,7 @@ namespace ApiCoreServices.Controllers
             return Customer;
         }
 
-        [Route("api/Customer/CustomerNames")]
+        [Route("CustomerNames")]
         [HttpPost]
         public List<CustomerViewModel> CustomerNames(AutoCompleteModel data)
         {

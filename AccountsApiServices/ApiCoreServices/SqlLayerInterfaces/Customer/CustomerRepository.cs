@@ -54,14 +54,19 @@ namespace ApiCoreServices.SqlLayerInterfaces.Customer
                
                 using (_dbContext = new AccountdbContext())
                 {
-                    cust = _dbContext.Customer.Where(e => e.CustId.Equals(id)).FirstOrDefault();
+                    //cust = _dbContext.Customer.Where(e => e.CustId.Equals(id)).FirstOrDefault();
+                    customerViewModel = (from c in _dbContext.Customer
+                            join cd in _dbContext.CustomerDetails on c.CustId equals cd.CustId
+                            where c.CustId == id
+                            select ConstructCustomerViewModelFromContext(c, cd)
+                            ).FirstOrDefault();
                 }
-                customerViewModel = ConstructCustomerViewModelFromContext(cust);
+                //customerViewModel = ConstructCustomerViewModelFromContext(cust);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                throw ex;
             }
 
             return customerViewModel;
@@ -93,23 +98,61 @@ namespace ApiCoreServices.SqlLayerInterfaces.Customer
                     response.recordId = HelperUtility.ConvertLongToInt(cust.CustId);
                     customerVM.id = response.recordId;
 
-                    //Loop all the address list and update the address in the db....................
-                    if (customerVM.CustAddressList.Any())
+                    EfDbContext.CustomerDetails customerDetails = new EfDbContext.CustomerDetails()
                     {
-                        foreach (var item in customerVM.CustAddressList)
-                        {
-                            _dbContext.CustomerDetails.Add(ConstructCustAddressAsPerContext(item, customerVM.id));
-                        }
-                    }
+                        CustId = customerVM.id,
+                        AlternateMobile = customerVM.alternateMobile,
+                        HomePhone = customerVM.homePhone,
+                        OfficePhone = customerVM.officePhone,
+                        Email = customerVM.email,
+                        Address = customerVM.address,
+                        City = customerVM.city,
+                        State = customerVM.state,
+                        ShopName = customerVM.shopName,
+                        ShopLocation = customerVM.shopLocation
+                    };
+
+                    _dbContext.CustomerDetails.Add(customerDetails);
+                    _dbContext.SaveChanges();
+
+                    //Loop all the address list and update the address in the db....................
+                    //if (customerVM.CustAddressList != null && customerVM.CustAddressList.Any())
+                    //{
+                    //    foreach (var item in customerVM.CustAddressList)
+                    //    {
+                    //        _dbContext.CustomerDetails.Add(ConstructCustAddressAsPerContext(item, customerVM.id));
+                    //    }
+                    //}
+
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                throw ex;
             }
             
             
+
+            return response;
+        }
+
+        public CommonResponseViewModel UpdateCustomer(CustomerViewModel customerVM)
+        {
+            CommonResponseViewModel response = new CommonResponseViewModel();
+            try
+            {
+                using (_dbContext = new AccountdbContext())
+                {
+                    var obj = _dbContext.Customer.Where(c => c.CustId.Equals(customerVM.id)).FirstOrDefault();
+                }
+                
+
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
 
             return response;
         }
@@ -122,25 +165,58 @@ namespace ApiCoreServices.SqlLayerInterfaces.Customer
             {
                 using (_dbContext = new AccountdbContext())
                 {
-                    dbcustList = _dbContext.Customer.ToList();
+                    // dbcustList = _dbContext.Customer.ToList();
+                    custList = (from c in _dbContext.Customer
+                                join cd in _dbContext.CustomerDetails on c.CustId equals cd.CustId
+                                select ConstructCustomerViewModelFromContext(c, cd)
+                               ).ToList();
                 }
-                if (dbcustList.Any())
-                {
-                    foreach (var item in dbcustList)
-                    {
-                        custList.Add(ConstructCustomerViewModelFromContext(item));
-                    }
-                }
+                //if (dbcustList.Any())
+                //{
+                //    foreach (var item in dbcustList)
+                //    {
+                //        custList.Add(ConstructCustomerViewModelFromContext(item));
+                //    }
+                //}
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw ex;
             }
             
             return custList;
 
+        }
+
+        private static CustomerViewModel ConstructCustomerViewModelFromContext(EfDbContext.Customer c, EfDbContext.CustomerDetails cd)
+        {
+            return new CustomerViewModel()
+            {
+                id = c.CustId,
+                nickName = c.NickName,
+                firstName = c.FirstName,
+                middleName = c.MiddleName,
+                lastName = c.LastName,
+                mobile = c.Mobile,
+                referredBy = c.ReferredBy,
+                createdDate = c.CreatedDate,
+                formattedCreatedDate = c.CreatedDate.ToString("dd MMM yyyy"),
+                createdBy = c.CreatedBy,
+                modifiedDate = c.ModifiedDate,
+                formattedModifiedDate = c.ModifiedDate.ToString("dd MMM yyyy"),
+                modifiedBy = c.ModifiedBy,
+
+                alternateMobile = cd.AlternateMobile,
+                homePhone = cd.HomePhone,
+                officePhone = cd.OfficePhone,
+                email = cd.Email,
+                address = cd.Address,
+                city = cd.City,
+                state = cd.State,
+                shopName = cd.ShopName,
+                shopLocation = cd.ShopLocation
+            };
         }
 
         public bool CheckIsDuplicateNickName([FromBody] string data)

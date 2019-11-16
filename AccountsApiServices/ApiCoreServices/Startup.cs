@@ -55,12 +55,15 @@ namespace ApiCoreServices
                         builder.WithOrigins("http://localhost:4201")
                                             .AllowAnyHeader()
                                             .AllowAnyMethod();
+
                     });
 
             });
 
+            //services.AddDbContext<AccountdbContext>(item => item.UseSqlServer
+            //    (Configuration.GetConnectionString("AccountsDBConnection")));
             services.AddDbContext<AccountdbContext>(item => item.UseSqlServer
-                (Configuration.GetConnectionString("AccountsDBConnection")));
+               ("Server=DESKTOP-B49CDMF\\SQLSERVER2017;Database=AccountDb;UID=sa;PWD=ManishRaj@16;"));
 
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IVendorRepository, VendorRepository>();
