@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ApiCoreServices.EfDbContext;
 using ApiCoreServices.SqlLayerInterfaces;
 using ApiCoreServices.SqlLayerInterfaces.Customer;
+using ApiCoreServices.SqlLayerInterfaces.StockIn;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -62,6 +63,11 @@ namespace ApiCoreServices
                 (Configuration.GetConnectionString("AccountsDBConnection")));
 
             services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<IVendorRepository, VendorRepository>();
+            services.AddScoped<IStockInRepository, StockInRepository>();
+            services.AddScoped<ISalesRepository, SalesRepository>();
+
+
 
 
 

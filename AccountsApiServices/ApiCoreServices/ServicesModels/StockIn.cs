@@ -5,7 +5,7 @@ using System.Web;
 
 namespace ApiCoreServices.Models
 {
-    public class StockIn
+    public class StockInViewModel
     {
         public int Id { get; set; }
         public string nickName { get; set; }

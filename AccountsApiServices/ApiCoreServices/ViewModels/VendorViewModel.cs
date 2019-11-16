@@ -13,17 +13,24 @@ namespace ApiCoreServices.ViewModels
         public string middleName { get; set; }
         public string lastName { get; set; }
         public string mobile { get; set; }
+        
+        public string referredBy { get; set; }
+
+        public List<VendorDetails> VendorAddressList { get; set; }
+        public string createdDate { get; set; }
+        public string createdBy { get; set; }
+        public string modifiedDate { get; set; }
+        public string modifiedBy { get; set; }
+    }
+
+    public class VendorDetails
+    {
         public string alternateMobile { get; set; }
         public string homePhone { get; set; }
         public string email { get; set; }
         public string address { get; set; }
         public string city { get; set; }
         public string state { get; set; }
-        public string referredBy { get; set; }
-
-        public string createdDate { get; set; }
-        public string createdBy { get; set; }
-        public string modifiedDate { get; set; }
-        public string modifiedBy { get; set; }
     }
+
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ApiCoreServices.Models;
 using ApiCoreServices.SqlLayerInterfaces;
 using ApiCoreServices.ViewModels;
 using Microsoft.AspNetCore.Http;
@@ -21,24 +22,13 @@ namespace ApiCoreServices.Controllers
             _CustomerRepository = CustomerRepository;
         }
         // GET: api/Customer
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET: api/Customer/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        //// POST: api/Customer
-        //[HttpPost]
-        //public void Post([FromBody] string value)
+        //[HttpGet]
+        //public IEnumerable<string> Get()
         //{
+        //    return new string[] { "value1", "value2" };
         //}
+
+
 
         [HttpPost]
         //[EnableCors("AllowAll")]
@@ -50,16 +40,58 @@ namespace ApiCoreServices.Controllers
             return null;
         }
 
-        // PUT: api/Customer/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPost]
+        [Route("api/Customer/{id}")]
+        public CustomerViewModel GetCustomerById(int id)
         {
+            CustomerViewModel Customer = null;
+            Customer = _CustomerRepository.GetCustomerById(id);
+            return Customer;
         }
 
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [Route("api/Customer/CustomerNames")]
+        [HttpPost]
+        public List<CustomerViewModel> CustomerNames(AutoCompleteModel data)
         {
+            return _CustomerRepository.CustomerNames(data);
         }
+
+
+
+        [HttpPost]
+        [Route("GetAllCustomers")]
+        public List<CustomerViewModel> GetAllCustomers()
+        {
+            return _CustomerRepository.GetAllCustomers();
+        }
+
+        [Route("CheckIsDuplicateNickName")]
+        [HttpPost]
+        public bool CheckIsDuplicateNickName([FromBody]string data)
+        {
+            bool isDuplicateNickName = false;
+
+            if (string.IsNullOrWhiteSpace(data))
+            {
+                throw new Exception("name cannot be empty exception");
+            }
+           
+            if ((_CustomerRepository.CheckIsDuplicateNickName(data)))
+            {
+                isDuplicateNickName = true;
+            }
+
+            return isDuplicateNickName;
+        }
+
+        [HttpPost]
+        [Route("DeleteCustomerById")]
+        public bool DeleteCustomerById(int id)
+        {
+           var results = _CustomerRepository.DeleteCustomerById(id);
+           return results;
+        }
+
+
     }
 }
