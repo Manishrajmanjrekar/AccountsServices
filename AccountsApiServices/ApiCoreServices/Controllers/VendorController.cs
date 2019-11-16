@@ -55,6 +55,7 @@ namespace ApiCoreServices.Controllers
             VendorViewModel Vendorvm = null;
             Vendorvm = _VendorRepository.GetVendorById(id);
             return Vendorvm;
+
         }
 
         [Route("VendorNames")]
