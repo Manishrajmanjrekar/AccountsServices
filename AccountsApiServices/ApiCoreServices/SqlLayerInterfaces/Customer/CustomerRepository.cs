@@ -219,7 +219,7 @@ namespace ApiCoreServices.SqlLayerInterfaces.Customer
             };
         }
 
-        public bool CheckIsDuplicateNickName([FromBody] string data)
+        public bool CheckIsDuplicateNickName(string data)
         {
             bool results = false;
             try

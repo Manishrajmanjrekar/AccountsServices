@@ -1,8 +1,6 @@
 ﻿using System;
-using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Extensions.Configuration;
 
 namespace ApiCoreServices.EfDbContext
 {
@@ -37,23 +35,11 @@ namespace ApiCoreServices.EfDbContext
         public virtual DbSet<VendorExpenses> VendorExpenses { get; set; }
         public virtual DbSet<VendorPayments> VendorPayments { get; set; }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    if (!optionsBuilder.IsConfigured)
-        //    {
-        //    }
-        //}
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                IConfigurationRoot configuration = new ConfigurationBuilder()
-                   .SetBasePath(Directory.GetCurrentDirectory())
-                   .AddJsonFile("appsettings.json")
-                   .Build();
-                var connectionString = configuration.GetConnectionString("AccountsDBConnection");
-                optionsBuilder.UseSqlServer(connectionString);
+
             }
         }
 
@@ -505,8 +491,6 @@ namespace ApiCoreServices.EfDbContext
             {
                 entity.HasKey(e => e.VendorDetailId)
                     .HasName("PK_VendorDetails_1");
-
-                entity.Property(e => e.VendorDetailId).ValueGeneratedNever();
 
                 entity.Property(e => e.Address).HasColumnName("address");
 

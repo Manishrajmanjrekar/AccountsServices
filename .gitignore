@@ -48,3 +48,4 @@ AccountsApiServices/AccountsApiServices/AccountsApiServices.csproj
 *.woff
 *.woff2
 *.force
+/AccountsApiServices/ApiCoreServices/SqlLayerInterfaces/Sales/*.cs

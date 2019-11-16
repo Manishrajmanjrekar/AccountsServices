@@ -40,8 +40,17 @@ namespace ApiCoreServices.Controllers
         }
 
         [HttpPost]
-        [Route("VendorById")]
-        public VendorViewModel VendorById(int id)
+        [Route("UpdateVendor")]
+        public CommonResponseViewModel UpdateVendor(VendorViewModel vendorVM)
+        {
+            var response = _VendorRepository.SaveVendor(vendorVM);
+            Console.WriteLine();
+            return null;
+        }
+
+        [HttpPost]
+        [Route("GetVendorById")]
+        public VendorViewModel GetVendorById(int id)
         {
             VendorViewModel Vendorvm = null;
             Vendorvm = _VendorRepository.GetVendorById(id);
@@ -58,8 +67,8 @@ namespace ApiCoreServices.Controllers
 
 
         [HttpPost]
-        [Route("AllVendors")]
-        public List<VendorViewModel> AllVendors()
+        [Route("GetAllVendors")]
+        public List<VendorViewModel> GetAllVendors()
         {
             return _VendorRepository.GetAllVendors();
         }
