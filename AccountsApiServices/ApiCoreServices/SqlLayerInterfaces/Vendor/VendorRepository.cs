@@ -12,9 +12,11 @@ namespace ApiCoreServices.SqlLayerInterfaces.Customer
     public class VendorRepository : IVendorRepository
     {
         AccountdbContext _dbContext;
+        static string _dateFormat = "dd MMM yyyy";
+
         public VendorRepository(AccountdbContext dbContext)
         {
-              _dbContext = dbContext;
+            _dbContext = dbContext;
         }
 
         public List<VendorViewModel> VendorNames(AutoCompleteModel data)
@@ -22,7 +24,12 @@ namespace ApiCoreServices.SqlLayerInterfaces.Customer
             var vendorList = new List<VendorViewModel>();
             try
             {
-                var vendors = _dbContext.Vendor.Where(e => e.NickName.Contains(data.q)).ToList();
+                var vendors = new List<EfDbContext.Vendor>();
+                using (_dbContext = new AccountdbContext())
+                {
+                    vendors = _dbContext.Vendor.Where(e => e.NickName.Contains(data.q)).ToList();
+                }
+
                 if (vendors.Any())
                 {
                     foreach (var item in vendors)
@@ -47,11 +54,10 @@ namespace ApiCoreServices.SqlLayerInterfaces.Customer
             {
                 using (_dbContext = new AccountdbContext())
                 {
-                    //cust = _dbContext.Vendor.Where(e => e.CustId.Equals(id)).FirstOrDefault();
-                    vendorViewModel = ( from v in _dbContext.Vendor
-                                        join vd in _dbContext.VendorDetails on v.VendorId equals vd.VendorId
-                                        where v.VendorId == id
-                                        select ConstructVendorViewModelFromContext(v, vd)
+                    vendorViewModel = (from v in _dbContext.Vendor
+                                       join vd in _dbContext.VendorDetails on v.VendorId equals vd.VendorId
+                                       where v.VendorId == id
+                                       select ConstructVendorViewModelFromContext(v, vd)
                                       ).FirstOrDefault();
                 }
             }
@@ -78,12 +84,12 @@ namespace ApiCoreServices.SqlLayerInterfaces.Customer
 
             using (_dbContext = new AccountdbContext())
             {
-                //Save the customer entity first........
+                //Save the vendor entity first........
                 _dbContext.Vendor.Add(vendor);
                 _dbContext.SaveChanges();
 
                 response.isSuccess = true;
-                //update the custid from db to viewModel............................
+                //update the vendorid from db to viewModel............................
                 response.recordId = HelperUtility.ConvertLongToInt(vendor.VendorId);
                 vendorVM.id = response.recordId;
 
@@ -121,7 +127,37 @@ namespace ApiCoreServices.SqlLayerInterfaces.Customer
             {
                 using (_dbContext = new AccountdbContext())
                 {
-                    var obj = _dbContext.Vendor.Where(v => v.VendorId.Equals(vendorVM.id)).FirstOrDefault();
+                    var vendor = _dbContext.Vendor.Where(v => v.VendorId.Equals(vendorVM.id)).FirstOrDefault();
+                    if (vendor != null)
+                    {
+                        vendor.FirstName = vendorVM.firstName;
+                        vendor.MiddleName = vendorVM.middleName;
+                        //vendor.NickName = vendorVM.nickName;
+                        vendor.LastName = vendorVM.lastName;
+                        vendor.MobileNo = vendorVM.mobile;
+                        vendor.ReferredBy = vendorVM.referredBy;
+                        vendor.CreatedBy = vendorVM.createdBy;
+                        vendor.ModifiedBy = vendorVM.modifiedBy;
+
+                        _dbContext.Update(vendor);
+
+                        var vendorDetails = _dbContext.VendorDetails.Where(c => c.VendorId.Equals(vendorVM.id)).FirstOrDefault();
+                        if (vendorDetails != null)
+                        {
+                            vendorDetails.VendorId = vendorVM.id;
+                            vendorDetails.AlternateMobile = vendorVM.alternateMobile;
+                            vendorDetails.HomePhone = vendorVM.homePhone;
+                            vendorDetails.Email = vendorVM.email;
+                            vendorDetails.Address = vendorVM.address;
+                            vendorDetails.City = vendorVM.city;
+                            vendorDetails.State = vendorVM.state;
+
+                            _dbContext.Update(vendorDetails);
+                        }
+
+                        _dbContext.SaveChanges();
+                        response.isSuccess = true;
+                    }
                 }
             }
             catch (Exception ex)
@@ -140,20 +176,11 @@ namespace ApiCoreServices.SqlLayerInterfaces.Customer
             {
                 using (_dbContext = new AccountdbContext())
                 {
-                    // dbcustList = _dbContext.Vendor.ToList();
                     vendorList = (from c in _dbContext.Vendor
                                   join cd in _dbContext.VendorDetails on c.VendorId equals cd.VendorId
                                   select ConstructVendorViewModelFromContext(c, cd)
                                  ).ToList();
                 }
-
-                //if (dbVendorList.Any())
-                //{
-                //    foreach (var item in dbVendorList)
-                //    {
-                //        custList.Add(ConstructVendorViewModelFromContext(item));
-                //    }
-                //}
             }
             catch (Exception ex)
             {
@@ -165,12 +192,21 @@ namespace ApiCoreServices.SqlLayerInterfaces.Customer
 
         public bool CheckIsDuplicateNickName(string data)
         {
-            if (_dbContext.Vendor.Any(x => x.NickName.ToLower() == data.ToLower() && x.IsActive == true))
+            bool results = false;
+            try
             {
-                return true;
+                using (_dbContext = new AccountdbContext())
+                {
+                    results = _dbContext.Vendor.Any(x => x.NickName.ToLower() == data.ToLower()
+                               && x.IsActive == true);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
             }
 
-            return false;
+            return results;
         }
         public bool DeleteVendorById(int id)
         {
@@ -183,7 +219,7 @@ namespace ApiCoreServices.SqlLayerInterfaces.Customer
 
         }
 
-        private  EfDbContext.VendorDetails ConstructVendorAddressAsPerContext(ViewModels.VendorDetails item,int vendorId)
+        private EfDbContext.VendorDetails ConstructVendorAddressAsPerContext(ViewModels.VendorDetails item, int vendorId)
         {
             return new EfDbContext.VendorDetails
             {
@@ -191,7 +227,7 @@ namespace ApiCoreServices.SqlLayerInterfaces.Customer
                 Address = item.address,
                 AlternateMobile = item.alternateMobile,
                 City = item.city,
-                HomePhone =item.homePhone,
+                HomePhone = item.homePhone,
                 State = item.state,
                 Email = item.email
             };
@@ -223,10 +259,10 @@ namespace ApiCoreServices.SqlLayerInterfaces.Customer
                 mobile = v.MobileNo,
                 referredBy = v.ReferredBy,
                 createdDate = v.CreatedDate,
-                formattedCreatedDate = v.CreatedDate.ToString("dd MMM yyyy"),
+                formattedCreatedDate = v.CreatedDate.ToString(_dateFormat),
                 createdBy = v.CreatedBy,
                 modifiedDate = v.ModifiedDate,
-                formattedModifiedDate = v.ModifiedDate.ToString("dd MMM yyyy"),
+                formattedModifiedDate = v.ModifiedDate.ToString(_dateFormat),
                 modifiedBy = v.ModifiedBy,
 
                 alternateMobile = vd.AlternateMobile,

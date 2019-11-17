@@ -10,7 +10,9 @@ namespace ApiCoreServices.SqlLayerInterfaces
 {
     public interface IVendorRepository
     {
-         CommonResponseViewModel SaveVendor(VendorViewModel customerVM);
+        CommonResponseViewModel SaveVendor(VendorViewModel customerVM);
+
+        CommonResponseViewModel UpdateVendor(VendorViewModel customerVM);
 
         VendorViewModel GetVendorById(int id);
 

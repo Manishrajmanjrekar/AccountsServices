@@ -35,17 +35,15 @@ namespace ApiCoreServices.Controllers
         public CommonResponseViewModel SaveVendor(VendorViewModel vendorVM)
         {
             var response = _VendorRepository.SaveVendor(vendorVM);
-            Console.WriteLine();
-            return null;
+            return response;
         }
 
         [HttpPost]
         [Route("UpdateVendor")]
         public CommonResponseViewModel UpdateVendor(VendorViewModel vendorVM)
         {
-            var response = _VendorRepository.SaveVendor(vendorVM);
-            Console.WriteLine();
-            return null;
+            var response = _VendorRepository.UpdateVendor(vendorVM);
+            return response;
         }
 
         [HttpPost]
@@ -84,7 +82,7 @@ namespace ApiCoreServices.Controllers
             {
                 throw new Exception("name cannot be empty exception");
             }
-           
+
             if ((_VendorRepository.CheckIsDuplicateNickName(data)))
             {
                 isDuplicateNickName = true;
@@ -97,8 +95,8 @@ namespace ApiCoreServices.Controllers
         [Route("DeleteCustomerById")]
         public bool DeleteCustomerById(int id)
         {
-           var results = _VendorRepository.DeleteVendorById(id);
-           return results;
+            var results = _VendorRepository.DeleteVendorById(id);
+            return results;
         }
 
 

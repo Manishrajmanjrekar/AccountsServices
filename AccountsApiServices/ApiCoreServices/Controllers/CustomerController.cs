@@ -32,8 +32,8 @@ namespace ApiCoreServices.Controllers
 
         [HttpPost]
         //[EnableCors("AllowAll")]
-        [Route("PostCustomer")]
-        public CommonResponseViewModel PostCustomer(CustomerViewModel customerVM)
+        [Route("SaveCustomer")]
+        public CommonResponseViewModel SaveCustomer(CustomerViewModel customerVM)
         {
             var response = _CustomerRepository.SaveCustomer(customerVM);
             Console.WriteLine();
@@ -84,7 +84,7 @@ namespace ApiCoreServices.Controllers
             {
                 throw new Exception("name cannot be empty exception");
             }
-           
+
             if ((_CustomerRepository.CheckIsDuplicateNickName(data)))
             {
                 isDuplicateNickName = true;
@@ -97,8 +97,8 @@ namespace ApiCoreServices.Controllers
         [Route("DeleteCustomerById")]
         public bool DeleteCustomerById(int id)
         {
-           var results = _CustomerRepository.DeleteCustomerById(id);
-           return results;
+            var results = _CustomerRepository.DeleteCustomerById(id);
+            return results;
         }
 
 

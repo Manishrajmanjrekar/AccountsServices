@@ -10,7 +10,7 @@ namespace ApiCoreServices.SqlLayerInterfaces
 {
     public interface ICustomerRepository
     {
-         CommonResponseViewModel SaveCustomer(CustomerViewModel customerVM);
+        CommonResponseViewModel SaveCustomer(CustomerViewModel customerVM);
 
         CommonResponseViewModel UpdateCustomer(CustomerViewModel customerVM);
 

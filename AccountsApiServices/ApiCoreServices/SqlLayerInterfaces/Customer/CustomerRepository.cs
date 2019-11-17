@@ -12,9 +12,11 @@ namespace ApiCoreServices.SqlLayerInterfaces.Customer
     public class CustomerRepository : ICustomerRepository
     {
         AccountdbContext _dbContext;
+        static string _dateFormat = "dd MMM yyyy";
+
         public CustomerRepository(AccountdbContext dbContext)
         {
-              _dbContext = dbContext;
+            _dbContext = dbContext;
         }
 
         public List<CustomerViewModel> CustomerNames(AutoCompleteModel data)
@@ -23,19 +25,18 @@ namespace ApiCoreServices.SqlLayerInterfaces.Customer
             try
             {
                 var customerList = new List<EfDbContext.Customer>();
-                using (_dbContext= new AccountdbContext())
+                using (_dbContext = new AccountdbContext())
                 {
                     customerList = _dbContext.Customer.Where(e => e.NickName.Contains(data.q)).ToList();
-
                 }
 
-                    if (customerList.Any())
+                if (customerList.Any())
+                {
+                    foreach (var item in customerList)
                     {
-                        foreach (var item in customerList)
-                        {
-                            custList.Add(ConstructCustomerViewModelFromContext(item));
-                        }
+                        custList.Add(ConstructCustomerViewModelFromContext(item));
                     }
+                }
             }
             catch (Exception ex)
             {
@@ -51,14 +52,14 @@ namespace ApiCoreServices.SqlLayerInterfaces.Customer
             var cust = new EfDbContext.Customer();
             try
             {
-               
+
                 using (_dbContext = new AccountdbContext())
                 {
                     //cust = _dbContext.Customer.Where(e => e.CustId.Equals(id)).FirstOrDefault();
                     customerViewModel = (from c in _dbContext.Customer
-                            join cd in _dbContext.CustomerDetails on c.CustId equals cd.CustId
-                            where c.CustId == id
-                            select ConstructCustomerViewModelFromContext(c, cd)
+                                         join cd in _dbContext.CustomerDetails on c.CustId equals cd.CustId
+                                         where c.CustId == id
+                                         select ConstructCustomerViewModelFromContext(c, cd)
                             ).FirstOrDefault();
                 }
                 //customerViewModel = ConstructCustomerViewModelFromContext(cust);
@@ -131,8 +132,8 @@ namespace ApiCoreServices.SqlLayerInterfaces.Customer
 
                 throw ex;
             }
-            
-            
+
+
 
             return response;
         }
@@ -144,12 +145,45 @@ namespace ApiCoreServices.SqlLayerInterfaces.Customer
             {
                 using (_dbContext = new AccountdbContext())
                 {
-                    var obj = _dbContext.Customer.Where(c => c.CustId.Equals(customerVM.id)).FirstOrDefault();
+                    var customer = _dbContext.Customer.Where(c => c.CustId.Equals(customerVM.id)).FirstOrDefault();
+                    if (customer != null)
+                    {
+                        customer.FirstName = customerVM.firstName;
+                        customer.MiddleName = customerVM.middleName;
+                        //customer.NickName = customerVM.nickName;
+                        customer.LastName = customerVM.lastName;
+                        customer.Mobile = customerVM.mobile;
+                        customer.ReferredBy = customerVM.referredBy;
+                        customer.CreatedBy = customerVM.createdBy;
+                        customer.ModifiedBy = customerVM.modifiedBy;
+
+                        _dbContext.Update(customer);
+
+                        var customerDetails = _dbContext.CustomerDetails.Where(c => c.CustId.Equals(customerVM.id)).FirstOrDefault();
+                        if (customerDetails != null)
+                        {
+                            customerDetails.CustId = customerVM.id;
+                            customerDetails.AlternateMobile = customerVM.alternateMobile;
+                            customerDetails.HomePhone = customerVM.homePhone;
+                            customerDetails.OfficePhone = customerVM.officePhone;
+                            customerDetails.Email = customerVM.email;
+                            customerDetails.Address = customerVM.address;
+                            customerDetails.City = customerVM.city;
+                            customerDetails.State = customerVM.state;
+                            customerDetails.ShopName = customerVM.shopName;
+                            customerDetails.ShopLocation = customerVM.shopLocation;
+
+                            _dbContext.Update(customerDetails);
+                        }
+
+                        _dbContext.SaveChanges();
+                        response.isSuccess = true;
+                    }
                 }
-                
+
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -184,7 +218,7 @@ namespace ApiCoreServices.SqlLayerInterfaces.Customer
             {
                 throw ex;
             }
-            
+
             return custList;
 
         }
@@ -201,10 +235,10 @@ namespace ApiCoreServices.SqlLayerInterfaces.Customer
                 mobile = c.Mobile,
                 referredBy = c.ReferredBy,
                 createdDate = c.CreatedDate,
-                formattedCreatedDate = c.CreatedDate.ToString("dd MMM yyyy"),
+                formattedCreatedDate = c.CreatedDate.ToString(_dateFormat),
                 createdBy = c.CreatedBy,
                 modifiedDate = c.ModifiedDate,
-                formattedModifiedDate = c.ModifiedDate.ToString("dd MMM yyyy"),
+                formattedModifiedDate = c.ModifiedDate.ToString(_dateFormat),
                 modifiedBy = c.ModifiedBy,
 
                 alternateMobile = cd.AlternateMobile,
@@ -228,7 +262,6 @@ namespace ApiCoreServices.SqlLayerInterfaces.Customer
                 {
                     results = _dbContext.Customer.Any(x => x.NickName.ToLower() == data.ToLower()
                                && x.IsActive == true);
-
                 }
             }
             catch (Exception)
@@ -236,7 +269,7 @@ namespace ApiCoreServices.SqlLayerInterfaces.Customer
 
                 throw;
             }
-            
+
 
             return results;
         }
@@ -259,13 +292,13 @@ namespace ApiCoreServices.SqlLayerInterfaces.Customer
 
                 throw;
             }
-          
-           
+
+
             return false;
 
         }
 
-        private  EfDbContext.CustomerDetails ConstructCustAddressAsPerContext(ViewModels.CustomerDetails item,int custId)
+        private EfDbContext.CustomerDetails ConstructCustAddressAsPerContext(ViewModels.CustomerDetails item, int custId)
         {
             return new EfDbContext.CustomerDetails
             {
@@ -294,6 +327,6 @@ namespace ApiCoreServices.SqlLayerInterfaces.Customer
             };
         }
 
-        
+
     }
 }
