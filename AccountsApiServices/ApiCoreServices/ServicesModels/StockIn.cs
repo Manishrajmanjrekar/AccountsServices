@@ -7,19 +7,26 @@ namespace ApiCoreServices.Models
 {
     public class StockInViewModel
     {
-        public int Id { get; set; }
-        public string nickName { get; set; }
-        public string firstName { get; set; }
-
-        public int TotalQuantity { get; set; }
-        public string CreatedDate { get; set; }
-        public int VendorId { get; set; }
-        public bool IsActive { get; set; }
+        public long id { get; set; }
+        public long vendorId { get; set; }
         public string loadName { get; set; }
+        public int totalQuantity { get; set; }
+        public bool isActive { get; set; }        
+        public DateTime? createdDate { get; set; }
 
-
-
-
+        public string formattedCreatedDate { get; set; }
+        public string formattedModifiedDate { get; set; }
+        
+        /// <summary>
+        /// vendor nick name
+        /// </summary>
+        public string nickName { get; set; }
+        
+        /// <summary>
+        /// vendor first name
+        /// </summary>
+        public string firstName { get; set; }
+        
 
     }
 }

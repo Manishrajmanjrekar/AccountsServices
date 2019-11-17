@@ -69,7 +69,7 @@ namespace ApiCoreServices.SqlLayerInterfaces.Customer
             return vendorViewModel;
         }
 
-        public CommonResponseViewModel SaveVendor(VendorViewModel vendorVM)
+        public CommonResponseViewModel AddVendor(VendorViewModel vendorVM)
         {
             CommonResponseViewModel response = new CommonResponseViewModel();
             var vendor = new EfDbContext.Vendor();
@@ -90,7 +90,7 @@ namespace ApiCoreServices.SqlLayerInterfaces.Customer
 
                 response.isSuccess = true;
                 //update the vendorid from db to viewModel............................
-                response.recordId = HelperUtility.ConvertLongToInt(vendor.VendorId);
+                response.recordId = vendor.VendorId;
                 vendorVM.id = response.recordId;
 
                 EfDbContext.VendorDetails vendorDetails = new EfDbContext.VendorDetails()
@@ -138,6 +138,7 @@ namespace ApiCoreServices.SqlLayerInterfaces.Customer
                         vendor.ReferredBy = vendorVM.referredBy;
                         vendor.CreatedBy = vendorVM.createdBy;
                         vendor.ModifiedBy = vendorVM.modifiedBy;
+                        vendor.ModifiedDate = DateTime.Now;
 
                         _dbContext.Update(vendor);
 
@@ -210,13 +211,24 @@ namespace ApiCoreServices.SqlLayerInterfaces.Customer
         }
         public bool DeleteVendorById(int id)
         {
-            var vendor = _dbContext.Vendor.Where(e => e.VendorId.Equals(id)).FirstOrDefault();
-            vendor.IsActive = false;
+            bool result = false;
+            try
+            {
+                using (_dbContext = new AccountdbContext())
+                {
+                    var vendor = _dbContext.Vendor.Where(e => e.VendorId.Equals(id)).FirstOrDefault();
+                    vendor.IsActive = false;
 
-            _dbContext.Vendor.Update(vendor);
-            _dbContext.SaveChanges();
-            return true;
+                    _dbContext.Vendor.Update(vendor);
+                    _dbContext.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
+            return result;
         }
 
         private EfDbContext.VendorDetails ConstructVendorAddressAsPerContext(ViewModels.VendorDetails item, int vendorId)

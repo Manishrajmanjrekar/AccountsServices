@@ -35,18 +35,10 @@ namespace ApiCoreServices.Controllers
         [Route("SaveCustomer")]
         public CommonResponseViewModel SaveCustomer(CustomerViewModel customerVM)
         {
-            var response = _CustomerRepository.SaveCustomer(customerVM);
-            Console.WriteLine();
-            return response;
-        }
-
-        [HttpPost]
-        [Route("UpdateCustomer")]
-        public CommonResponseViewModel UpdateCustomer(CustomerViewModel customerVM)
-        {
-            var response = _CustomerRepository.UpdateCustomer(customerVM);
-            Console.WriteLine();
-            return response;
+            if (customerVM.id > 0)
+                return _CustomerRepository.UpdateCustomer(customerVM);
+           else
+                return _CustomerRepository.AddCustomer(customerVM);
         }
 
         [HttpPost]

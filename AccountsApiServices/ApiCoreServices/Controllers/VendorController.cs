@@ -16,34 +16,19 @@ namespace ApiCoreServices.Controllers
     {
         IVendorRepository _VendorRepository;
 
-
         public VendorController(IVendorRepository VendorRepository)
         {
             _VendorRepository = VendorRepository;
         }
-        // GET: api/Customer
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
-
-
 
         [HttpPost]
         [Route("SaveVendor")]
         public CommonResponseViewModel SaveVendor(VendorViewModel vendorVM)
         {
-            var response = _VendorRepository.SaveVendor(vendorVM);
-            return response;
-        }
-
-        [HttpPost]
-        [Route("UpdateVendor")]
-        public CommonResponseViewModel UpdateVendor(VendorViewModel vendorVM)
-        {
-            var response = _VendorRepository.UpdateVendor(vendorVM);
-            return response;
+            if (vendorVM.id > 0)
+                return _VendorRepository.UpdateVendor(vendorVM);
+            else
+                return _VendorRepository.AddVendor(vendorVM);
         }
 
         [HttpPost]

@@ -22,18 +22,11 @@ namespace ApiCoreServices.Controllers
         {
             _StockInRepository = StockInRepository;
         }
-        // GET: api/Customer
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
-
 
 
         [HttpPost]
         [Route("StockById")]
-        public SalesViewModel StockById(string id)
+        public StockInViewModel StockById(string id)
         {
            return _StockInRepository.StockById(id);
         }
@@ -54,16 +47,19 @@ namespace ApiCoreServices.Controllers
         }
 
         [HttpPost]
-        [Route("AddStock")]
-        public StockInViewModel AddStock(StockInViewModel data)
+        [Route("SaveStock")]
+        public CommonResponseViewModel SaveStock(StockInViewModel stockInVM)
         {
-            return _StockInRepository.AddStock(data);
+            if (stockInVM.id > 0)
+                return _StockInRepository.UpdateStock (stockInVM);
+            else
+                return _StockInRepository.AddStock(stockInVM);
         }
 
 
 
         [HttpPost]
-        [Route("AllVendors")]
+        [Route("GetAllStock")]
         public List<StockInViewModel> GetAllStockList()
         {
             return _StockInRepository.GetAllStockList();
@@ -89,10 +85,10 @@ namespace ApiCoreServices.Controllers
         }
 
         [HttpPost]
-        [Route("DeleteCustomerById")]
-        public bool DeleteCustomerById(int id)
+        [Route("DeleteStockById")]
+        public bool DeleteStockById(int id)
         {
-           var results = _StockInRepository.DeleteVendorById(id);
+           var results = _StockInRepository.DeleteStockById(id);
            return results;
         }
 

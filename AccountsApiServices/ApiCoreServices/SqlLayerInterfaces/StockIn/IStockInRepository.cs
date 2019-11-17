@@ -13,11 +13,13 @@ namespace ApiCoreServices.SqlLayerInterfaces
     {
         List<SalesViewModel> LoadNames(AutoCompleteModel data);
 
-        SalesViewModel StockById(string id);
+        StockInViewModel StockById(string id);
 
         int StockInCount(StockInViewModel stock);
 
-        StockInViewModel AddStock(StockInViewModel data);
+        CommonResponseViewModel AddStock(StockInViewModel data);
+
+        CommonResponseViewModel UpdateStock(StockInViewModel data);
 
         List<StockInViewModel> GetActiveStockList();
 
@@ -27,6 +29,6 @@ namespace ApiCoreServices.SqlLayerInterfaces
 
         bool CheckIsDuplicateNickName([FromBody] string data);
 
-        bool DeleteVendorById(int id);
+        bool DeleteStockById(int id);
     }
 }

@@ -73,7 +73,7 @@ namespace ApiCoreServices.SqlLayerInterfaces.Customer
             return customerViewModel;
         }
 
-        public CommonResponseViewModel SaveCustomer(CustomerViewModel customerVM)
+        public CommonResponseViewModel AddCustomer(CustomerViewModel customerVM)
         {
             CommonResponseViewModel response = new CommonResponseViewModel();
             try
@@ -96,7 +96,7 @@ namespace ApiCoreServices.SqlLayerInterfaces.Customer
 
                     response.isSuccess = true;
                     //update the custid from db to viewModel............................
-                    response.recordId = HelperUtility.ConvertLongToInt(cust.CustId);
+                    response.recordId = cust.CustId;
                     customerVM.id = response.recordId;
 
                     EfDbContext.CustomerDetails customerDetails = new EfDbContext.CustomerDetails()
@@ -129,11 +129,8 @@ namespace ApiCoreServices.SqlLayerInterfaces.Customer
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
-
-
 
             return response;
         }
@@ -156,6 +153,7 @@ namespace ApiCoreServices.SqlLayerInterfaces.Customer
                         customer.ReferredBy = customerVM.referredBy;
                         customer.CreatedBy = customerVM.createdBy;
                         customer.ModifiedBy = customerVM.modifiedBy;
+                        customer.ModifiedDate = DateTime.Now;
 
                         _dbContext.Update(customer);
 
@@ -275,7 +273,7 @@ namespace ApiCoreServices.SqlLayerInterfaces.Customer
         }
         public bool DeleteCustomerById(int id)
         {
-            bool results = false;
+            bool result = false;
             try
             {
                 using (_dbContext = new AccountdbContext())
@@ -284,18 +282,15 @@ namespace ApiCoreServices.SqlLayerInterfaces.Customer
                     cust.IsActive = false;
                     _dbContext.Customer.Update(cust);
                     _dbContext.SaveChanges();
-                    results = true;
+                    result = true;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw ex;
             }
 
-
-            return false;
-
+            return result;
         }
 
         private EfDbContext.CustomerDetails ConstructCustAddressAsPerContext(ViewModels.CustomerDetails item, int custId)

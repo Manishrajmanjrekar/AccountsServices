@@ -13,6 +13,6 @@ namespace ApiCoreServices.ViewModels
 
         public string message { get; set; }
 
-        public int recordId { get; set; }
+        public long recordId { get; set; }
     }
 }
