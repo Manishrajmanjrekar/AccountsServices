@@ -77,8 +77,8 @@ namespace ApiCoreServices.Controllers
         }
 
         [HttpPost]
-        [Route("DeleteCustomerById")]
-        public bool DeleteCustomerById(int id)
+        [Route("DeleteVendorById")]
+        public bool DeleteVendorById(int id)
         {
             var results = _VendorRepository.DeleteVendorById(id);
             return results;

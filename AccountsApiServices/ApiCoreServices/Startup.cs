@@ -69,7 +69,7 @@ namespace ApiCoreServices
             services.AddScoped<IVendorRepository, VendorRepository>();
             services.AddScoped<IStockInRepository, StockInRepository>();
             services.AddScoped<ISalesRepository, SalesRepository>();
-
+            services.AddScoped<IExpenseRepository, ExpenseRepository>();
 
 
 
