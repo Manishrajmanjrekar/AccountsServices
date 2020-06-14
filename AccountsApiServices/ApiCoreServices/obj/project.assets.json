@@ -327,7 +327,7 @@
           "build/_._": {}
         }
       },
-      "Microsoft.CodeAnalysis.Common/3.4.0-beta2-final": {
+      "Microsoft.CodeAnalysis.Common/3.4.0-beta2-19477-01": {
         "type": "package",
         "dependencies": {
           "Microsoft.CodeAnalysis.Analyzers": "2.9.4",
@@ -386,10 +386,10 @@
           }
         }
       },
-      "Microsoft.CodeAnalysis.CSharp/3.4.0-beta2-final": {
+      "Microsoft.CodeAnalysis.CSharp/3.4.0-beta2-19477-01": {
         "type": "package",
         "dependencies": {
-          "Microsoft.CodeAnalysis.Common": "[3.4.0-beta2-final]"
+          "Microsoft.CodeAnalysis.Common": "[3.4.0-beta2-19477-01]"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.CodeAnalysis.CSharp.dll": {}
@@ -439,12 +439,12 @@
           }
         }
       },
-      "Microsoft.CodeAnalysis.CSharp.Workspaces/3.4.0-beta2-final": {
+      "Microsoft.CodeAnalysis.CSharp.Workspaces/3.4.0-beta2-19477-01": {
         "type": "package",
         "dependencies": {
-          "Microsoft.CodeAnalysis.CSharp": "[3.4.0-beta2-final]",
-          "Microsoft.CodeAnalysis.Common": "[3.4.0-beta2-final]",
-          "Microsoft.CodeAnalysis.Workspaces.Common": "[3.4.0-beta2-final]"
+          "Microsoft.CodeAnalysis.CSharp": "[3.4.0-beta2-19477-01]",
+          "Microsoft.CodeAnalysis.Common": "[3.4.0-beta2-19477-01]",
+          "Microsoft.CodeAnalysis.Workspaces.Common": "[3.4.0-beta2-19477-01]"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.CodeAnalysis.CSharp.Workspaces.dll": {}
@@ -508,10 +508,10 @@
           "lib/netstandard2.0/Microsoft.CodeAnalysis.Razor.dll": {}
         }
       },
-      "Microsoft.CodeAnalysis.Workspaces.Common/3.4.0-beta2-final": {
+      "Microsoft.CodeAnalysis.Workspaces.Common/3.4.0-beta2-19477-01": {
         "type": "package",
         "dependencies": {
-          "Microsoft.CodeAnalysis.Common": "[3.4.0-beta2-final]",
+          "Microsoft.CodeAnalysis.Common": "[3.4.0-beta2-19477-01]",
           "System.Composition": "1.0.31"
         },
         "compile": {
@@ -3320,10 +3320,10 @@
         "tools/uninstall.ps1"
       ]
     },
-    "Microsoft.CodeAnalysis.Common/3.4.0-beta2-final": {
-      "sha512": "Ge7zyiTi5KlD1IbKOXgpWN9LiLGpXv5eiCyRx8nyfm57Bkpyyy4MNHjG02gBRaeZCL0y6LQx8ONmjS+xrDYgTw==",
+    "Microsoft.CodeAnalysis.Common/3.4.0-beta2-19477-01": {
+      "sha512": "kmmKbkQIRI20YRltzIlAVUXFTGr+ziWXJoM6XzeSzru45F618y1ATLWE0Iouec+uTAEtxb0eHtb5lozikm+MrA==",
       "type": "package",
-      "path": "microsoft.codeanalysis.common/3.4.0-beta2-final",
+      "path": "microsoft.codeanalysis.common/3.4.0-beta2-19477-01",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3344,14 +3344,14 @@
         "lib/netstandard2.0/tr/Microsoft.CodeAnalysis.resources.dll",
         "lib/netstandard2.0/zh-Hans/Microsoft.CodeAnalysis.resources.dll",
         "lib/netstandard2.0/zh-Hant/Microsoft.CodeAnalysis.resources.dll",
-        "microsoft.codeanalysis.common.3.4.0-beta2-final.nupkg.sha512",
+        "microsoft.codeanalysis.common.3.4.0-beta2-19477-01.nupkg.sha512",
         "microsoft.codeanalysis.common.nuspec"
       ]
     },
-    "Microsoft.CodeAnalysis.CSharp/3.4.0-beta2-final": {
-      "sha512": "xQ6OZFgpCOLeHiSlH70Ig5JrrZsRLcwnXgH9DOF6k9XEVvgTYEOffsY6Yf/vjvp+6JqrMcMGXoVO7whgF0iD1g==",
+    "Microsoft.CodeAnalysis.CSharp/3.4.0-beta2-19477-01": {
+      "sha512": "RLLLPcfUvB8/nkTEQJkHD5RoDMrQY7GYRYPZHP89H7HWm1MlYga9klHAcd7Hoya+1PECmY62V1oC3a8jAwa8Dw==",
       "type": "package",
-      "path": "microsoft.codeanalysis.csharp/3.4.0-beta2-final",
+      "path": "microsoft.codeanalysis.csharp/3.4.0-beta2-19477-01",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3372,14 +3372,14 @@
         "lib/netstandard2.0/tr/Microsoft.CodeAnalysis.CSharp.resources.dll",
         "lib/netstandard2.0/zh-Hans/Microsoft.CodeAnalysis.CSharp.resources.dll",
         "lib/netstandard2.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "microsoft.codeanalysis.csharp.3.4.0-beta2-final.nupkg.sha512",
+        "microsoft.codeanalysis.csharp.3.4.0-beta2-19477-01.nupkg.sha512",
         "microsoft.codeanalysis.csharp.nuspec"
       ]
     },
-    "Microsoft.CodeAnalysis.CSharp.Workspaces/3.4.0-beta2-final": {
-      "sha512": "7Cz5RKMy6yqBatWtCADP1kvqrLAZIyW8uCVypikUvYWkru97FKdbk81GwgVV2w/NzAwMgFrwLs5Xje3y/GaG/Q==",
+    "Microsoft.CodeAnalysis.CSharp.Workspaces/3.4.0-beta2-19477-01": {
+      "sha512": "RRIEXiv9vxM5zXUIOsCBsLWE1ZgW+7Stkf7tfV68fyrrBLu9WGS2r27CLEj+GQBfZvPm9AgdztedYufooTp8EQ==",
       "type": "package",
-      "path": "microsoft.codeanalysis.csharp.workspaces/3.4.0-beta2-final",
+      "path": "microsoft.codeanalysis.csharp.workspaces/3.4.0-beta2-19477-01",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3400,7 +3400,7 @@
         "lib/netstandard2.0/tr/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
         "lib/netstandard2.0/zh-Hans/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
         "lib/netstandard2.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
-        "microsoft.codeanalysis.csharp.workspaces.3.4.0-beta2-final.nupkg.sha512",
+        "microsoft.codeanalysis.csharp.workspaces.3.4.0-beta2-19477-01.nupkg.sha512",
         "microsoft.codeanalysis.csharp.workspaces.nuspec"
       ]
     },
@@ -3418,10 +3418,10 @@
         "packageIcon.png"
       ]
     },
-    "Microsoft.CodeAnalysis.Workspaces.Common/3.4.0-beta2-final": {
-      "sha512": "3ncmh4TDrARBytJO2WGvje73zDAweo4H0Vf/NtnYYp9fc731LQMAI9x1/l2Tbedqztj69WNeWmvOYHW2JzAdtg==",
+    "Microsoft.CodeAnalysis.Workspaces.Common/3.4.0-beta2-19477-01": {
+      "sha512": "rRxktycH1glhInl9ILHyMYC4hKh/dGdwtjEawxuDORWI3dx7xaag/t8FwQOUhcTfmyOm7HVXvCY/XWu4KLUMmA==",
       "type": "package",
-      "path": "microsoft.codeanalysis.workspaces.common/3.4.0-beta2-final",
+      "path": "microsoft.codeanalysis.workspaces.common/3.4.0-beta2-19477-01",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3441,7 +3441,7 @@
         "lib/netstandard2.0/tr/Microsoft.CodeAnalysis.Workspaces.resources.dll",
         "lib/netstandard2.0/zh-Hans/Microsoft.CodeAnalysis.Workspaces.resources.dll",
         "lib/netstandard2.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.resources.dll",
-        "microsoft.codeanalysis.workspaces.common.3.4.0-beta2-final.nupkg.sha512",
+        "microsoft.codeanalysis.workspaces.common.3.4.0-beta2-19477-01.nupkg.sha512",
         "microsoft.codeanalysis.workspaces.common.nuspec"
       ]
     },
@@ -9107,21 +9107,19 @@
   },
   "packageFolders": {
     "C:\\Users\\Manis\\.nuget\\packages\\": {},
-    "C:\\Microsoft\\Xamarin\\NuGet\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Manis\\Documents\\GitHub\\AccountsServices\\AccountsApiServices\\ApiCoreServices\\ApiCoreServices.csproj",
+      "projectUniqueName": "C:\\Users\\Manis\\AccountsServicesWorkSpace\\AccountsServices\\AccountsApiServices\\ApiCoreServices\\ApiCoreServices.csproj",
       "projectName": "ApiCoreServices",
-      "projectPath": "C:\\Users\\Manis\\Documents\\GitHub\\AccountsServices\\AccountsApiServices\\ApiCoreServices\\ApiCoreServices.csproj",
+      "projectPath": "C:\\Users\\Manis\\AccountsServicesWorkSpace\\AccountsServices\\AccountsApiServices\\ApiCoreServices\\ApiCoreServices.csproj",
       "packagesPath": "C:\\Users\\Manis\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Manis\\Documents\\GitHub\\AccountsServices\\AccountsApiServices\\ApiCoreServices\\obj\\",
+      "outputPath": "C:\\Users\\Manis\\AccountsServicesWorkSpace\\AccountsServices\\AccountsApiServices\\ApiCoreServices\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Microsoft\\Xamarin\\NuGet\\",
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "C:\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
         "C:\\Users\\Manis\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -9133,7 +9131,8 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "https://api.nuget.org/v3/index.json": {}
+        "https://api.nuget.org/v3/index.json": {},
+        "https://dotnet.myget.org/F/roslyn/api/v3/index.json": {}
       },
       "frameworks": {
         "netcoreapp3.1": {
@@ -9194,30 +9193,8 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100-preview2-014569\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1603",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Microsoft.VisualStudio.Web.CodeGeneration.Templating 3.1.0-preview1-19509-03 depends on Microsoft.CodeAnalysis.CSharp (>= 3.4.0-beta2-19477-01) but Microsoft.CodeAnalysis.CSharp 3.4.0-beta2-19477-01 was not found. An approximate best match of Microsoft.CodeAnalysis.CSharp 3.4.0-beta2-final was resolved.",
-      "libraryId": "Microsoft.CodeAnalysis.CSharp",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v3.1"
-      ]
-    },
-    {
-      "code": "NU1603",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Microsoft.VisualStudio.Web.CodeGeneration.Utils 3.1.0-preview1-19509-03 depends on Microsoft.CodeAnalysis.CSharp.Workspaces (>= 3.4.0-beta2-19477-01) but Microsoft.CodeAnalysis.CSharp.Workspaces 3.4.0-beta2-19477-01 was not found. An approximate best match of Microsoft.CodeAnalysis.CSharp.Workspaces 3.4.0-beta2-final was resolved.",
-      "libraryId": "Microsoft.CodeAnalysis.CSharp.Workspaces",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v3.1"
-      ]
-    }
-  ]
+  }
 }
