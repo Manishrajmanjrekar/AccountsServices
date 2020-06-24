@@ -1,1 +1,99 @@
-﻿{"ContextClassName":"AccountdbContext","DefaultDacpacSchema":null,"IdReplace":false,"IncludeConnectionString":false,"OutputPath":"EfDbContext","ProjectRootNamespace":"ApiCoreServices","SelectedToBeGenerated":0,"Tables":[{"HasPrimaryKey":true,"Name":"dbo.CommissionAgentExpenses"},{"HasPrimaryKey":true,"Name":"dbo.CommissionAgentPurchases"},{"HasPrimaryKey":true,"Name":"dbo.CommissionAgentSales"},{"HasPrimaryKey":true,"Name":"dbo.CommissionEarned"},{"HasPrimaryKey":true,"Name":"dbo.CommissionPercentage"},{"HasPrimaryKey":true,"Name":"dbo.Customer"},{"HasPrimaryKey":true,"Name":"dbo.CustomerDetails"},{"HasPrimaryKey":true,"Name":"dbo.CustomerPayments"},{"HasPrimaryKey":true,"Name":"dbo.Expenses"},{"HasPrimaryKey":true,"Name":"dbo.ExpenseTypes"},{"HasPrimaryKey":true,"Name":"dbo.Sales"},{"HasPrimaryKey":true,"Name":"dbo.SalesReturns"},{"HasPrimaryKey":true,"Name":"dbo.StockIn"},{"HasPrimaryKey":true,"Name":"dbo.Vendor"},{"HasPrimaryKey":true,"Name":"dbo.VendorAdvances"},{"HasPrimaryKey":true,"Name":"dbo.VendorAdvancesReturned"},{"HasPrimaryKey":true,"Name":"dbo.VendorDetails"},{"HasPrimaryKey":true,"Name":"dbo.VendorExpenses"},{"HasPrimaryKey":true,"Name":"dbo.VendorPayments"}],"UseDatabaseNames":false,"UseFluentApiOnly":true,"UseHandleBars":false,"UseInflector":false}
+﻿{
+   "ContextClassName": "AccountdbContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "DoNotCombineNamespace": false,
+   "IdReplace": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "EfDbContext",
+   "ProjectRootNamespace": "ApiCoreServices",
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[CommissionAgentExpenses]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[CommissionAgentPurchases]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[CommissionAgentSales]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[CommissionEarned]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[CommissionPercentage]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Customer]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[CustomerDetails]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[CustomerPayments]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Expenses]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[ExpenseTypes]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Sales]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[SalesReturns]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[StockIn]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Vendor]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[VendorAdvances]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[VendorAdvancesReturned]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[VendorDetails]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[VendorExpenses]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[VendorPayments]"
+      }
+   ],
+   "UseDatabaseNames": false,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseSpatial": false
+}
